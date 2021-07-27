@@ -22,6 +22,8 @@ Example:
 
 > sudo fanctl --config-file="/etc/fanctl.conf"
 
+/etc/fanctl.conf
+
 ```
 asus_fan
 [20, 0]
@@ -31,4 +33,10 @@ asus_fan
 [60, 100]
 ```
 ## Building
-
+> mkdir build
+> 
+> cd build
+> 
+> cmake ..
+> 
+> make
