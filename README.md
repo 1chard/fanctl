@@ -8,6 +8,7 @@ Control the speed of a fan using avaiable interface(s). Fanctl has support for t
 ## Usage
 
 Note: the executable must be run as root.
+
 Create a file with an interface and their arguments (default path: /etc/fanctl.conf), using as syntax:
 
 ```
