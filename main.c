@@ -40,11 +40,6 @@ int main(int argc, char* argv[]){
 
 
             if(argv[i][13] == '='){
-               /* if(argv[i][14] == '"'){
-                    strncpy(nameOfConfigFile, strchr(argv[i], '"'), 512);
-                    char* ch = strrchr(nameOfConfigFile, '"');
-                    *ch = '\0';
-                } */
 
                 strncpy(nameOfConfigFile, (argv[i] + 14), 512);
 
