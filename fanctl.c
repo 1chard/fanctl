@@ -87,3 +87,7 @@ byte bitOn(byte eightBitsArg, int bitPosition){
 byte bitOff(byte eightBitsArg, int bitPosition){
     return (1 << bitPosition) & ~eightBitsArg;
 }
+
+byte bitFlip(byte eightBitsArg, int bitPosition){
+    return (1 << bitPosition) ^ ~eightBitsArg;
+}
