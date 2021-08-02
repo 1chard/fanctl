@@ -51,7 +51,7 @@ result_t getTempsConfig(const char* configFilename, char* nameOfFanToWork, Argum
         default:{
             {
                 int i=0;
-                for(; isgraph(ch); ++i){
+                for(; isgraph(ch) && ch != ':'; ++i){
                     nameOfFanToWork[i] = ch;
                     ch = fgetc(configFile);
                 }

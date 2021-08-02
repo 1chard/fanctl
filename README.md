@@ -12,7 +12,7 @@ Note: the executable must be run as root.
 Create a file with an interface and their arguments (default path: /etc/fanctl.conf), using as syntax:
 
 ```
-interface_name
+interface_name:
 [temperature, fan speed (0 to 100, without percentage symbol '%')]
 ...
 [temperature, fan speed]
@@ -25,7 +25,7 @@ Example:
 /etc/fanctl.conf
 
 ```
-asus_fan
+asus_fan:
 [20, 0]
 [30, 25]
 [40, 50]
