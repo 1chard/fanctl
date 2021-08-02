@@ -10,7 +10,6 @@ void sigintHandler(){
     if(bitStatus(argumentsToExit, 1)){ //close files
         fclose(fileAutoFanControl);
         fclose(fileManualFanControl);
-        //fclose(fileTemperatureValue);
     }
 
 
