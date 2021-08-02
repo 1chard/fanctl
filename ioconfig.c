@@ -5,7 +5,7 @@ result_t getTemperatureInputFromFile(char*, FILE*, u_int8_t*);
 
 result_t getTempsConfig(const char* configFilename, char* nameOfFanToWork, Argument* temperaturesPointer, int* temperatureIndex_ptr) {
     FILE* configFile = fopen(configFilename, "r");
-    char ch = '\0'; //fgetc(configFile);
+    char ch = '\0';
 
     if(!configFile){
         switch(errno){
@@ -224,8 +224,14 @@ result_t getTemperatureInputFromFile(char* ch, FILE* configFile, u_int8_t* toRec
             return RESULT_STOP;
         }
 
-        else if(*ch == ' ' || *ch == '\t' ||*ch == 'n')
+        else if(*ch == ' ' || *ch == '\t')
             continue;
+
+        else if(*ch == '-'){
+            puts("Error: negative output.\n");
+            return RESULT_FAIL;
+        }
+
 
         else{
             printf("Error: %c on argument.\n", *ch);
