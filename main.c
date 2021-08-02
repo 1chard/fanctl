@@ -65,8 +65,6 @@ int main(int argc, char* argv[]){
         raise(SIGINT);
     }
 
-
-
     setFanMode(fanName, argumentArray, argumentArrayIndex);
 
     raise(SIGINT);
