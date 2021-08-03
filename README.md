@@ -26,7 +26,7 @@ Example:
 /etc/fanctl.conf
 
 ```
-asus_fan:
+asus:
 [20, 0]
 [30, 25]
 [40, 50]
