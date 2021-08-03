@@ -30,17 +30,20 @@ char toChar(int __integer);
 int toInt(char __character);
 int parseInt(const char* __string);
 int conv100to255(int __100basevalue);
-result_t setFanMode(const char* fanName, Argument* fansValues, int fansValueIndex);
+result_t startFanCtl(const char* fanName, Argument* fansValues, int fansValueIndex);
 byte bitStatus(byte eightBitsArg, int bitPosition);
 byte bitOn(byte eightBitsArg, int bitPosition);
 byte bitOff(byte eightBitsArg, int bitPosition);
+byte bitFlip(byte eightBitsArg, int bitPosition);
 result_t getTempsConfig(const char* configFilename, char* nameOfFanToWork, Argument* temperaturesPointer, int* temperatureIndex_ptr);
 
-
+extern unsigned int sleepTime;
 extern byte argumentsToExit;
-/*                          tbd    closefilesbelow     clearfancontrol: write 2 to file
- *                          v      v                   v
- *  0b  0   0   0   0   0   0      0                   0
+/*      closefilesbelow.                        parsefileerror.
+ *      v                                       v
+ *  0b  0 0 0 0 0                            0  0          0
+ *        ^                                  ^             ^
+ *        clearfancontrol: write 2 to file.  write error.  other errors.
  */
 
 extern FILE* fileAutoFanControl;

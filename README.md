@@ -3,7 +3,8 @@
 
 Control the speed of a fan using avaiable interface(s). Fanctl has support for the following interfaces:
 
-* asus_fan
+* asus
+* amdgpu (development)
 
 ## Usage
 

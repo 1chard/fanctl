@@ -2,13 +2,12 @@
 #include <signal.h>
 #include <unistd.h>
 
-result_t hwmonGuess(char* startingName){ //this function swap '*' with a number of 0 >= x < 10
+result_t filenameGuess(char* startingName){ //this function swap '?' with a number of 0 >= x < 10
     FILE* directory;
-    char* toModify = strchr(startingName, '*');
+    char* toModify = strchr(startingName, '?');
 
     if(!toModify)
         return RESULT_FAIL;
-
 
     for(int i=0; i < 10; ++i){
         *toModify = toChar(i);
@@ -52,12 +51,12 @@ result_t generic100to255fanCtl(char* directoryOfGenericFan,Argument* fansValues,
         return RESULT_FAIL;
     }
 
-    argumentsToExit = bitOn(argumentsToExit, 1);
+    argumentsToExit = bitOn(argumentsToExit, 7);
 
 
     fprintf(fileAutoFanControl, "%d", 1);
     rewind(fileAutoFanControl);
-    argumentsToExit = bitOn(argumentsToExit, 0);
+    argumentsToExit = bitOn(argumentsToExit, 6);
 
     while(1){
         fscanf(fileTemperatureValue, "%d", &fanTemperature);
@@ -80,14 +79,14 @@ result_t generic100to255fanCtl(char* directoryOfGenericFan,Argument* fansValues,
 endLoop:;
 
         rewind(fileManualFanControl);
-        sleep(3);
+        sleep(sleepTime);
         fileTemperatureValue = fopen(nameTemperatureValue, "r");
     }
 }
 
 result_t asusFanCtl(Argument* fansValues, int fansValueIndex){
-    char directoryOfAsusFan[] = "/sys/devices/platform/asus-nb-wmi/hwmon/hwmon*/"; //array recommended
-    result_t result = hwmonGuess(directoryOfAsusFan);
+    char directoryOfAsusFan[] = "/sys/devices/platform/asus-nb-wmi/hwmon/hwmon?/"; //array recommended
+    result_t result = filenameGuess(directoryOfAsusFan);
 
     if(result == RESULT_FAIL)
         return RESULT_FAIL;
@@ -97,11 +96,16 @@ result_t asusFanCtl(Argument* fansValues, int fansValueIndex){
     return result;
 }
 
-result_t setFanMode(const char* fanName, Argument* fansValues, int fansValueIndex){
+result_t startFanCtl(const char* fanName, Argument* fansValues, int fansValueIndex){
     result_t result = 0;
 
-    if(!strcmp(fanName, "asus_fan"))
+    if(!strcmp(fanName, "asus"))
         result = asusFanCtl(fansValues, fansValueIndex);
+    else if(!strcmp(fanName, "amdgpu"))
+        result = 0;
+    else{
+        result = RESULT_FAIL;
+    }
 
     return result;
 

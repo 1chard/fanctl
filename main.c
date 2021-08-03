@@ -2,19 +2,15 @@
 #include "signal.h"
 
 void sigintHandler(){
-
-    if(bitStatus(argumentsToExit, 0))//write 2 to autocontrol
+    if(bitStatus(argumentsToExit, 6))//write 2 to autocontrol
         fprintf(fileAutoFanControl, "%d", 2);
 
-
-    if(bitStatus(argumentsToExit, 1)){ //close files
+    if(bitStatus(argumentsToExit, 7)){ //close files
         fclose(fileAutoFanControl);
         fclose(fileManualFanControl);
     }
 
-
-
-    exit(EXIT_SUCCESS);
+    exit(bitStatus(argumentsToExit, 0) | bitStatus(argumentsToExit, 1)| bitStatus(argumentsToExit, 2));
 }
 
 int main(int argc, char* argv[]){
@@ -23,10 +19,9 @@ int main(int argc, char* argv[]){
     int argumentArrayIndex = 0;
     char nameOfConfigFile[512] = "/etc/fanctl.conf";
 
-
     //args manager, search --help first
     for(int i=1; i < argc && !strcmp(argv[i], "--help"); ++i){
-        printf("Usage: %s (--help, --config-file, --sleep-time). \n"
+        printf("Usage: %s (--help, --config-file). \n"
                "\tOptions:\n"
                "\t --config-file=value\n"
                "\t\tUse 'value' as argument.\n", strrchr(argv[0], '/') + 1);
@@ -34,17 +29,13 @@ int main(int argc, char* argv[]){
     }
 
     for(int i=1; i < argc; ++i){
-
         if(!strncmp(argv[i], "--config-file", 13)){
-
-
-            if(argv[i][13] == '='){
-
+            if(argv[i][13] == '=')
                 strncpy(nameOfConfigFile, (argv[i] + 14), 512);
 
-            }
             else if(strlen(argv[i]) == 13 && (i + 1) < argc)
                 strncpy(nameOfConfigFile, argv[++i], 512);
+
             else{
                 puts("unformated argument.\n");
                 return 1;
@@ -65,7 +56,8 @@ int main(int argc, char* argv[]){
         raise(SIGINT);
     }
 
-    setFanMode(fanName, argumentArray, argumentArrayIndex);
+    result = startFanCtl(fanName, argumentArray, argumentArrayIndex);
+
 
     raise(SIGINT);
 }

@@ -6,6 +6,7 @@
 //variables & pointers
 
 byte argumentsToExit = 0b00000000;
+unsigned int sleepTime = 2;
 FILE* fileAutoFanControl;
 FILE* fileManualFanControl;
 FILE* fileTemperatureValue;
@@ -89,5 +90,5 @@ byte bitOff(byte eightBitsArg, int bitPosition){
 }
 
 byte bitFlip(byte eightBitsArg, int bitPosition){
-    return (1 << bitPosition) ^ ~eightBitsArg;
+    return (1 << bitPosition) ^ eightBitsArg;
 }
